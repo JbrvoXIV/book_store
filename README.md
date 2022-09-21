@@ -1,0 +1,1 @@
+An example of a back end server with MongoDB for group project.
