@@ -7,7 +7,7 @@ const app = express();
 const PORT = 5000;
 const server = 'https://localhost:';
 const moviesRouter = require('./routes/movies.route.js');
-const MONGO_URI = "mongodb+srv://jbrav058:BookStore123@cluster0.2wvd82q.mongodb.net/book_store?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
 mongoose.connection.on('error', () => console.log('Connection failed to establish with database'));
