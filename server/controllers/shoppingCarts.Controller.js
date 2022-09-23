@@ -1,5 +1,17 @@
-const Movies = require('../models/movies.model.js');
+const shoppingCarts = require('../models/shoppingCarts.model.js');
 
+// get all shoppingCarts
+const getAllShoppingCarts = async (req, res) => {
+    try{
+        const carts = await shoppingCarts.find();
+        return res.status(200).json(carts);
+    } catch(e) {
+        return res.status(404).json({ sucess: false, message: 'Could not load movies from database'});
+    }  
+};
+
+
+/*
 // get all movies
 const getAllMoviesController = async (req, res) => {
     try {
@@ -45,3 +57,6 @@ const getMovieByRatingController = async (req, res) => {
 };
 
 module.exports = { getAllMoviesController, getMovieController, getMovieByIDController, getMovieByRatingController };
+*/
+
+module.exports = {getAllShoppingCarts};

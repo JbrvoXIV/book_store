@@ -1,1 +1,2 @@
-An example of a back end server with MongoDB for group project.
+My copy of the source code for a book store api
+im in charge of implementing the shopping cart
