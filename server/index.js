@@ -1,12 +1,13 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require('express');         // Imports express
+const mongoose = require('mongoose');       // Imports mongoose
 const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 const server = 'https://localhost:';
 const userRouter = require('./routes/movies.route.js');
+const shoppingCartRouter = require('./routes/shoppingCarts.route.js');
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
@@ -16,5 +17,7 @@ mongoose.connection.once('open', () => console.log('Connection with database est
 app.use(express.json());
 app.use(cors());
 app.use('/user', userRouter);
+app.use('/shoppingCart', shoppingCartRouter);
 
-app.listen(PORT, () => console.log(`Running server on ${server}${PORT}`));
+// this gets the server up and running on the port 3000
+app.listen(PORT, () => console.log(`Running server on ${server}${PORT}`));  
