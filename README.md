@@ -1,1 +1,1 @@
-An example of a back end server with MongoDB for group project.
+A group project for CEN4010

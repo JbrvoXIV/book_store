@@ -6,7 +6,11 @@ require('dotenv').config();
 const app = express();
 const PORT = 5000;
 const server = 'https://localhost:';
+<<<<<<< HEAD
 const moviesRouter = require('./routes/movies.route.js');
+=======
+const userRouter = require('./routes/movies.route.js');
+>>>>>>> profile_management
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
@@ -15,6 +19,6 @@ mongoose.connection.once('open', () => console.log('Connection with database est
 
 app.use(express.json());
 app.use(cors());
-app.use('/movies', moviesRouter);
+app.use('/user', userRouter);
 
 app.listen(PORT, () => console.log(`Running server on ${server}${PORT}`));
