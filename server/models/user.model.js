@@ -54,10 +54,6 @@ const UserSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    wishlist: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'Books'
-    }],
     credit_cards: [{
         type: Number,
         min: 100000000000,
