@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 const PORT = 3000;
 const server = 'https://localhost:';
-const userRouter = require('./routes/movies.route.js');
+const userRouter = require('./routes/user.route.js');
 const shoppingCartRouter = require('./routes/shoppingCarts.route.js');
 const MONGO_URI = process.env.MONGO_URI;
 
