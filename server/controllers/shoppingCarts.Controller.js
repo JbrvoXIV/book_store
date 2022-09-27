@@ -1,4 +1,3 @@
-//const { find } = require('../models/shoppingCarts.model.js');
 const shoppingCarts = require('../models/shoppingCarts.model.js');
 
 // get all shoppingCarts
