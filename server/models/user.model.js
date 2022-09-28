@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 const BookSchema = require('./bookBrowsing.model.js');
+=======
+const { Book } = require("./book.model.js");
+>>>>>>> f885804 (firstCommit)
 
 const AddressSchema = mongoose.Schema({
     city: {
