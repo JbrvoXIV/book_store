@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
-
-const BookSchema = mongoose.Schema({
-    title: String,
-    author: String,
-    year: String
-})
+const { Book } = require("./book.model.js");
 
 const AddressSchema = mongoose.Schema({
     city: {
@@ -62,6 +57,5 @@ const UserSchema = mongoose.Schema({
 });
 
 const User = mongoose.model('Users', UserSchema, 'users');
-const Book = mongoose.model('Books', BookSchema, 'books');
 
-module.exports = { User, Book }
+module.exports = { User }
