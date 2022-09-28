@@ -1,9 +1,9 @@
-const shoppingCarts = require('../models/shoppingCarts.model.js');
+const shoppingCarts = require('../models/shoppingCarts.model.js');      
 
-// get all shoppingCarts
+
 const getAllShoppingCarts = async (req, res) => {
     try{
-       const carts = await shoppingCarts.find().populate('shoppingCart user');
+       const carts = await shoppingCarts.find().populate('shoppingCart user'); 
         return res.status(200).json(carts);
     } catch(e) {
         console.log(e);
