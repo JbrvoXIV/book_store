@@ -1,6 +1,6 @@
 const shoppingCarts = require('../models/shoppingCarts.model.js');      
 
-
+// get shoppingCart information
 const getAllShoppingCarts = async (req, res) => {
     try{
        const carts = await shoppingCarts.find().populate('shoppingCart user'); 
