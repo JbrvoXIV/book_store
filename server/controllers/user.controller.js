@@ -4,7 +4,7 @@ const { User, Book } = require('../models/user.model.js');
 const getUserByUserNameController = async (req, res) => {
     try {
         const {userName} = req.query;
-        const user = await User.find({ user_name: userName }).populate('wishlist');
+        const user = await User.find({ user_name: userName });
         return res.status(200).json(user);
     } catch(e) {
         console.log(e);
