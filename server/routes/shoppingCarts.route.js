@@ -5,11 +5,6 @@ const { getAllShoppingCarts } = require('../controllers/shoppingCarts.Controller
 
 router.get('/all', getAllShoppingCarts);
 
-/*
-router.get('/all', getAllMoviesController);
-router.get('/', getMovieController);
-router.get('/:id', getMovieByIDController);
-router.get('/rating/', getMovieByRatingController);
-*/
+
 
 module.exports = router;

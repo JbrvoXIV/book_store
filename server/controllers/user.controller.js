@@ -1,4 +1,4 @@
-const { User, Book } = require('../models/user.model.js');
+const { User } = require('../models/user.model.js');
 
 // get user from userName
 const getUserByUserNameController = async (req, res) => {
