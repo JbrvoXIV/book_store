@@ -11,6 +11,7 @@ const shoppingCartRouter = require('./routes/shoppingCarts.route.js');
 const bookBrowsingRouter = require('./routes/bookBrowsing.routes.js');
 const wishListRouter = require('./routes/wishList.route.js');
 
+const bookRouter = require('./routes/bookDetails.route.js');
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
@@ -24,5 +25,6 @@ app.use('/shoppingCart', shoppingCartRouter);
 app.use('/bookBrowsing', bookBrowsingRouter);
 app.use('/wishList', wishListRouter)
 
+app.use('/book', bookRouter);
 // this gets the server up and running on the port 3000
 app.listen(PORT, () => console.log(`Running server on ${server}${PORT}`));  
