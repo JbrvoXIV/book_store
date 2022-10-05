@@ -12,7 +12,10 @@ const bookBrowsingRouter = require('./routes/bookBrowsing.routes.js');
 const wishListRouter = require('./routes/wishList.route.js');
 
 const bookRouter = require('./routes/bookDetails.route.js');
+<<<<<<< HEAD
 const bookRating = require('./routes/ratings.route.js');
+=======
+>>>>>>> b013758 (rebased book_details with main part2)
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
