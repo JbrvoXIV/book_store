@@ -1,13 +1,4 @@
 const mongoose = require('mongoose');
-<<<<<<< HEAD
-<<<<<<< HEAD
-const BookSchema = require('./bookBrowsing.model.js');
-=======
-const { Book } = require("./book.model.js");
->>>>>>> f885804 (firstCommit)
-=======
-const { Book } = require("./book.model.js");
->>>>>>> c17769d2556489ed9bf9daebad10f626143c9e94
 
 const AddressSchema = mongoose.Schema({
     city: {

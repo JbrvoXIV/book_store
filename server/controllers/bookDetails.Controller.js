@@ -1,4 +1,4 @@
-const {Book} = require('../models/book.model.js');
+const {Book} = require('../models/bookBrowsing.model.js');
 
 // get details by book by isbn
 const getDetailsOfBookByIsbnController = async (req, res) => {

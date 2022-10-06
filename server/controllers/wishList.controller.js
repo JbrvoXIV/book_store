@@ -1,5 +1,4 @@
 const {wishList} = require('../models/wishList.model.js');
-const {User} = require('../models/user.model.js');
 
 const getWishListController = async (req, res) => {
     try{
