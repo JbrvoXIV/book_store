@@ -1,5 +1,5 @@
-const express = require('express');         // Imports express
-const mongoose = require('mongoose');       // Imports mongoose
+const express = require('express');       
+const mongoose = require('mongoose');      
 const cors = require('cors');
 require('dotenv').config();
 
@@ -12,6 +12,7 @@ const bookBrowsingRouter = require('./routes/bookBrowsing.routes.js');
 const wishListRouter = require('./routes/wishList.route.js');
 
 const bookRouter = require('./routes/bookDetails.route.js');
+const bookRating = require('./routes/ratings.route.js');
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
@@ -27,4 +28,6 @@ app.use('/wishList', wishListRouter)
 
 app.use('/book', bookRouter);
 // this gets the server up and running on the port 3000
-app.listen(PORT, () => console.log(`Running server on ${server}${PORT}`));  
+app.use('/ratings', bookRating);
+
+app.listen(PORT, () => console.log(`Running server on ${server}${PORT}`)); 
