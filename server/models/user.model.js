@@ -34,19 +34,20 @@ const UserSchema = mongoose.Schema({
     user_name: {
         type: String,
         trim: true,
+        unique: true,
         required: [true, 'Username is a required field']
     },
     email: {
         type: String,
         trim: true,
         lowercase: true,
+        unique: true,
         required: [true, 'Email address is required'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     address: {
         type: AddressSchema,
-        required: true,
-        unique: true
+        required: true
     },
     credit_cards: [{
         type: Number,
