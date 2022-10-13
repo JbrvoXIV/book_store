@@ -1,4 +1,5 @@
-const {Book, Ratings} = require('../models/bookBrowsing.model.js');
+const {Book} = require('../models/bookBrowsing.model.js');
+const Ratings = require('../models/ratings.model.js');
 
 //get book by bookTitle
 const getBookByBookTitleController = async (req, res) => {
@@ -27,9 +28,9 @@ const getBookByBookGenreController = async (req, res) => {
 //get book by rating 
 const getBookByBookRatingController = async (req, res) => {
     try {
-        const {bookRating} = req.params;
-        const rating = await Ratings.find({ rating: bookRating });
-        return res.status(200).json(rating);
+        const {rating} = req.params;
+        const books = await Ratings.find({ rating: rating });
+        return res.status(200).json(books);
     } catch(e) {
         console.log(e);
         return res.status(404).json({ status: 'failed', message: 'Rating not found in database' });
