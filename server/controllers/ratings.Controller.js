@@ -30,4 +30,27 @@ const getAllBookRatings = async (req, res) => {
     }
 };
 
-module.exports = {getAllBookRatings, getAllBookRatingsByTitle};
+const createUserRating = async (req, res) => {
+
+    try{
+
+        const rating = req.body;
+        const newRating = new ratings({
+            title: rating.title,
+            author: rating.author,
+            rating: rating.rating,
+            comment: rating.comment,
+            username: rating.username,
+            date: rating.date
+        });
+        await newRating.save();
+        res.status(201).json({ 
+            status: 201, message: "Rating successfully created", rating: newRating
+        });
+    } catch(error) {
+        res.status(401).json({ status: 401, message: error.message })
+    }
+    
+}
+
+module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating};
