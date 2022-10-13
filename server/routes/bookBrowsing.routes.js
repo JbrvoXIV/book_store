@@ -1,15 +1,11 @@
 const router = require('express').Router();
 
-const { getBookByBookTitleController } = require('../controllers/bookBrowsing.Controller.js');
+const { getBookByBookTitleController, getBookByBookGenreController, getBookByBookRatingController } = require('../controllers/bookBrowsing.Controller.js');
 
-router.get('/', getBookByBookTitleController);
+router.get('/title/', getBookByBookTitleController);
 
-const { getBookByBookGenreController} = require('../controllers/bookBrowsing.Controller.js');
+router.get('/genre/', getBookByBookGenreController);
 
-router.get('/genre:', getBookByBookGenreController);
-
-const { getBookByBookRatingController } = require('../controllers/bookBrowsing.Controller.js')
-
-router.get('/', getBookByBookRatingController)
+router.get('/rating/:rating', getBookByBookRatingController)
 
 module.exports = router;
