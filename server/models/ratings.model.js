@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const ratingSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -29,8 +30,8 @@ const ratingSchema = new mongoose.Schema({
         required: true,
     },
     date: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        default: Date,
         required: true
     }
 }, {collection: 'ratings'});
