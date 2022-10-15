@@ -29,7 +29,8 @@ const ratingSchema = new mongoose.Schema({
         required: true,
     },
     date: {
-        type: Number,
+        type: Date,
+        default: Date.now,
         required: true
     }
 }, {collection: 'ratings'});
