@@ -24,4 +24,33 @@ const getDetailsOfBookByAuthorController = async (req, res) => {
     }  
 };
 
-module.exports = {getDetailsOfBookByIsbnController, getDetailsOfBookByAuthorController};
+// save a book with ISBN, BookName, BookDescription, Price, Author, Genre, Publisher, YearPublished 
+const createNewBookController = async (req, res) => {
+    try{
+        const bookInfo = req.body;
+        
+        const newBook = new Book({
+            isbn: bookInfo.isbn,
+            title: bookInfo.title,
+            description: bookInfo.description,
+            price: bookInfo.price,
+            author: bookInfo.author,
+            genre: bookInfo.genre,
+            publisher: bookInfo.publisher,
+            year_published: bookInfo.year_published
+        });
+
+        await newBook.save();
+        res.status(201).json({ 
+            status: 201, message: "Book successfully created", user: newUser
+        });
+        
+        return res.status(200).json(bookDetailsByAuthor);
+
+    } catch(e) {
+        res.status(401).json({ status: 401, message: e.message })
+    }  
+};
+
+
+module.exports = { getDetailsOfBookByIsbnController, getDetailsOfBookByAuthorController, createNewBookController };
