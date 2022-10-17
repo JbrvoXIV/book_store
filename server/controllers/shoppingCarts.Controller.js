@@ -14,12 +14,17 @@ const getAllShoppingCarts = async (req, res) => {
 };
 
 const createCart = async (req, res) => {
-
+    
+    
     try{
 
         const book = await Book.find({title: req.body.title});
         const user = await User.find({user_name: req.body.user_name});
         
+        console.log(book);
+        console.log(user);
+
+
         if(book.length < 1) {
             throw "Cannot create shopping cart, book doesn't exist!";
         }
@@ -32,7 +37,9 @@ const createCart = async (req, res) => {
             shoppingCart:[{book: book[0]._id}],
             user: user[0]._id
         })
-        
+
+
+
         await data.save();
 
         return res.status(200).json(data);
@@ -42,7 +49,7 @@ const createCart = async (req, res) => {
         console.log(e);
         return res.status(404).json({ sucess: false, message: e});
     }
-
+    
 
 
 
