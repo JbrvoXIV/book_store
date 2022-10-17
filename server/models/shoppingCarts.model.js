@@ -11,7 +11,7 @@ const shoppingCartSchema = new mongoose.Schema({
           type: Schema.ObjectId,
           ref: 'Books' 
         },
-        quanity: { 
+        quantity: { 
           type: Number, 
           default: 1 
         },
