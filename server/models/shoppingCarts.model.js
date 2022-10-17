@@ -6,10 +6,17 @@ const Schema = mongoose.Schema;
 // Creates a new Schema function with necessary keys and values
 const shoppingCartSchema = new mongoose.Schema({ 
     shoppingCart:[
-        {
-            type: Schema.ObjectId, 
-            ref: 'Books'
+      { 
+        book: { 
+          type: Schema.ObjectId,
+          ref: 'Books' 
         },
+        quantity: { 
+          type: Number, 
+          default: 1 
+        },
+        _id: false
+       }
     ],
     user: {
         type: Schema.ObjectId,
