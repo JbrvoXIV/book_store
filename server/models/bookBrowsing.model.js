@@ -4,6 +4,7 @@ const BookSchema = mongoose.Schema({
     title: String,
     author: String,
     year: String,
+    description: String,
     copies_sold: Number,
     genre: String,
     isbn: String,
