@@ -28,7 +28,7 @@ const getDetailsOfBookByAuthorController = async (req, res) => {
 const createNewBookController = async (req, res) => {
     try{
         const bookInfo = req.body;
-        
+
         const newBook = new Book({
             isbn: bookInfo.isbn,
             title: bookInfo.title,
@@ -41,11 +41,8 @@ const createNewBookController = async (req, res) => {
         });
 
         await newBook.save();
-        res.status(201).json({ 
-            status: 201, message: "Book successfully created", user: newUser
-        });
         
-        return res.status(200).json(bookDetailsByAuthor);
+        return res.status(200).json({status: 201, message: "Book successfully created", book: newBook});
 
     } catch(e) {
         res.status(401).json({ status: 401, message: e.message })
