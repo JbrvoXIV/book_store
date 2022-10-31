@@ -40,46 +40,73 @@ const createWishListController = async (req, res) => {
     }
 }
 
-    const updateWishListController = async (req, res) => {  
+const updateWishListController = async (req, res) => {  
 
-        try {
+    try {
+        const { name_of_list, title } = req.body;
 
-            const wishlistFinder = await wishList.find({
-                name_of_list: req.body.name_of_list
-            })
-            console.log(wishlistFinder)
+        const myWishList = await wishList.findOne({ name_of_list: name_of_list });
 
-            const addBook = await Book.find({
-            title: req.body.title
-            })
-            console.log(addBook)
-            console.log(addBook[0]._id)
+        const book = await Book.findOne({ title: title });
+
+        if(myWishList.books.includes(book._id))
+            throw 'Book cannot be added to wishlist as it already exists'
+        else
+            myWishList.books.push(book._id);
+
+        // await wishList.findOneAndUpdate({
+        //     name_of_list: name_of_list
+        // }, {
+        //     $addToSet: { books: book._id }
+        // });
+
+        // const updatedWishList = await wishList.findOne({ name_of_list: name_of_list });
+
+        // res.status(200).json({ status: 200, message: "successfully updated wishList", wishList: updatedWishList });
+        await myWishList.save();
+        return res.status(200).json({ status: 200, message: "successfully updated wishList", wishList: myWishList });
+    } catch(e) {
+        return res.status(304).json({ status: 304, message: e.message ? e.message : e });
+    }
+
+        // try {
+
+        //     const wishlistFinder = await wishList.find({
+        //         name_of_list: req.body.name_of_list
+        //     })
+        //     console.log(wishlistFinder)
+
+        //     const addBook = await Book.find({
+        //     title: req.body.title
+        //     })
+        //     console.log(addBook)
+        //     console.log(addBook[0]._id)
             
-            await wishList.findOneAndUpdate({
-                name_of_list: req.body.name_of_list
+        //     await wishList.findOneAndUpdate({
+        //         name_of_list: req.body.name_of_list
      
-            },{
-                $push: { _id: addBook[0]._id }
-              })
-          /*  wishlistFinder[0].books.$addToSet({
-                title: addBook[0]._id
-            })
-          */  
+        //     },{
+        //         $push: { _id: addBook[0]._id }
+        //       })
+        //   /*  wishlistFinder[0].books.$addToSet({
+        //         title: addBook[0]._id
+        //     })
+        //   */  
             
         
-           /* wishlistFinder[0].books.updateWishListController({
-                name_of_list: wishlistFinder[0]._id},
-                {$push:{ books: addBook[0]._id }
-            })*/ 
-           // await wishlistFinder.save();
-            await wishList.save()
+        //    /* wishlistFinder[0].books.updateWishListController({
+        //         name_of_list: wishlistFinder[0]._id},
+        //         {$push:{ books: addBook[0]._id }
+        //     })*/ 
+        //    // await wishlistFinder.save();
+        //     await wishList.save()
             
             
-            res.status(200).json({status: 200, message:"Book Added"});
-        }catch(e){
-            res.status(304).json({status: 304, message: e.message})
+        //     res.status(200).json({status: 200, message:"Book Added"});
+        // }catch(e){
+        //     res.status(304).json({status: 304, message: e.message})
 
-        }
+        // }
         
 }
 
