@@ -7,25 +7,20 @@ const getAverageBookRatingByTitle = async (req, res) => {
         const {BookTitle} = req.query;
 
         const averageRating = await ratings.aggregate([{
-
-            $match: {
-                rating: {
-                    $exists: true
+            
+                $match: {
+                    title: BookTitle
                 }
+            },
+            {
+            $group: 
+                {"_id":null,  
+                "avg_rating": {"$avg": "$rating"}
+            }}])
 
-            }
-        }, 
-        {
-            $group: {
-                _id: null,
-                    averageRatingValue: {
-                        $avg: "$rating"
-                    }
-            }
-        }
-    ]);
-
+        return res.status(200).json(averageRating);
     }
+
     catch(error) {
         console.log(error);
         return res.status(404).json({success: false, message: 'Book ratings not found in database'});
