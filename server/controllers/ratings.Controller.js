@@ -85,4 +85,4 @@ const createUserRating = async (req, res) => {
     
 }
 
-module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating};
+module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating, getAverageBookRatingByTitle};
