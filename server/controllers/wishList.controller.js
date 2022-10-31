@@ -40,4 +40,47 @@ const createWishListController = async (req, res) => {
     }
 }
 
-module.exports = {getWishListController, createWishListController}
+    const updateWishListController = async (req, res) => {  
+
+        try {
+
+            const wishlistFinder = await wishList.find({
+                name_of_list: req.body.name_of_list
+            })
+            console.log(wishlistFinder)
+
+            const addBook = await Book.find({
+            title: req.body.title
+            })
+            console.log(addBook)
+            console.log(addBook[0]._id)
+            
+            await wishList.findOneAndUpdate({
+                name_of_list: req.body.name_of_list
+     
+            },{
+                $push: { _id: addBook[0]._id }
+              })
+          /*  wishlistFinder[0].books.$addToSet({
+                title: addBook[0]._id
+            })
+          */  
+            
+        
+           /* wishlistFinder[0].books.updateWishListController({
+                name_of_list: wishlistFinder[0]._id},
+                {$push:{ books: addBook[0]._id }
+            })*/ 
+           // await wishlistFinder.save();
+            await wishList.save()
+            
+            
+            res.status(200).json({status: 200, message:"Book Added"});
+        }catch(e){
+            res.status(304).json({status: 304, message: e.message})
+
+        }
+        
+}
+
+module.exports = {getWishListController, createWishListController, updateWishListController}
