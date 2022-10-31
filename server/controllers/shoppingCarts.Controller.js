@@ -57,26 +57,35 @@ const createCart = async (req, res) => {
 const addBook = async (req, res) => {
     
     try{
+
+        const quantity = req.body.quantity ? req.body.quantity : 1; // if user desires a quantity, then set it equal to quantity passed in, else 1
+
         const book = await Book.findOne({title: req.body.title});
-        const user = await User.find({user_name: req.body.user_name});
+        const user = await User.findOne({user_name: req.body.user_name});
 
-        console.log(book);
-        console.log(user);
+        const myShoppingCart = await shoppingCarts.findOne({ user: user._id });
 
-        if(book.length < 1) {
+        if(!book) { // book does not exist in db
             throw "Cannot add book to shopping cart, book doesn't exist!";
-            return res.status(404).json({success: false, message: e});
+        }
+        if(!user) { // user does not exist in db
+            throw "you must create a cart for a new user";
         }
 
-        if(user.length < 1) {
-            throw "you must create a cart for a new user";
-        }  
-        
+        const index = myShoppingCart.shoppingCart.findIndex(o => book._id.equals(o.book)); // find index of book with _id, -1 if not exist
 
-        
+        if(index >= 0) { // book exists, update with quantity
+            myShoppingCart.shoppingCart[index].quantity += quantity;
+        }
+        else // book does not exist, add to shoppingCart array
+            myShoppingCart.shoppingCart.push({ book: book._id, quantity: quantity });
+
+        await myShoppingCart.save();
+
+        return res.status(200).json({ status: 200, message: "successfully updated shopping cart", shoppingCart: myShoppingCart });
     } catch(e) {
         console.log(e);
-        return res.status(404).json({success: false, message: e});
+        return res.status(404).json({ success: false, message: e.message ? e.message : e });
     }
 
 }
