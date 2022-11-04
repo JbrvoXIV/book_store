@@ -90,4 +90,46 @@ const addBook = async (req, res) => {
 
 }
 
-module.exports = {getAllShoppingCarts, createCart, addBook};
+const deleteBook = async (req, res) => {
+
+    try{
+        const quantity = req.body.quantity ? req.body.quantity: 1; 
+        const book = await Book.findOne({title: req.body.title});
+        const user = await User.findOne({user_name: req.body.user_name});
+    
+        const myShoppingCart = await shoppingCarts.findOne({ user: user._id });
+    
+        if(!book){
+            throw "Cannot delete a book that doesnt exist";
+        }
+        if(!user) {
+            throw "user doesnt have a cart";
+        }
+    
+        const index = myShoppingCart.shoppingCart.findIndex(o => book._id.equals(o.book)); // find index of book with _id, -1 if not exist
+    
+        if(index >= 0) {
+    
+            if(myShoppingCart.shoppingCart[index].quantity - quantity <= 0){
+                myShoppingCart.shoppingCart.pull({ book: book._id, quantity: quantity });
+            }else{
+                myShoppingCart.shoppingCart[index].quantity -= quantity;
+            }
+
+    
+        }
+
+        await myShoppingCart.save();
+
+        return res.status(200).json({ status: 200, message: "successfully updated shopping cart", shoppingCart: myShoppingCart });
+
+    } catch(e) {
+
+        console.log(e);
+        return res.status(404).json({ success: false, message: e.message ? e.message : e });
+
+    }
+
+}
+
+module.exports = {getAllShoppingCarts, createCart, addBook, deleteBook};
