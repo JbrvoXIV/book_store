@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { CreditCardSchema } = require('./creditCard.model.js');
 
 const AddressSchema = mongoose.Schema({
     city: {
@@ -49,11 +50,7 @@ const UserSchema = mongoose.Schema({
         type: AddressSchema,
         required: true
     },
-    credit_cards: [{
-        type: Number,
-        min: 100000000000,
-        max: 999999999999
-    }]
+    credit_cards: [ CreditCardSchema ]
 });
 
 const User = mongoose.model('Users', UserSchema, 'users');
