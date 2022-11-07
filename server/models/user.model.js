@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const BookSchema = require('./bookBrowsing.model.js');
-
 
 const AddressSchema = mongoose.Schema({
     city: {
