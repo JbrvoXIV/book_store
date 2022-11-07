@@ -12,6 +12,8 @@ const bookBrowsingRouter = require('./routes/bookBrowsing.routes.js');
 const wishListRouter = require('./routes/wishList.route.js');
 
 const bookRouter = require('./routes/bookDetails.route.js');
+const authorRouter = require('./routes/authors.route.js');
+
 const bookRating = require('./routes/ratings.route.js');
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -27,6 +29,8 @@ app.use('/bookBrowsing', bookBrowsingRouter);
 app.use('/wishList', wishListRouter)
 
 app.use('/book', bookRouter);
+app.use('/author', authorRouter);
+
 // this gets the server up and running on the port 3000
 app.use('/ratings', bookRating);
 
