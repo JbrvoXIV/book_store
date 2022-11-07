@@ -4,7 +4,8 @@ const {
     getUserByUserNameController,
     createUserController,
     updateUserController,
-    createCreditCardController
+    createCreditCardController,
+    getCreditCardsController
 } = require('../controllers/user.controller.js');
 
 const validateDate = (req, res, next) => {
@@ -26,6 +27,7 @@ router.get('/', getUserByUserNameController);
 router.post('/create', createUserController);
 router.patch('/update/', updateUserController);
 
-router.get('/creditcard/create', validateDate, createCreditCardController);
+router.post('/creditcard/create', validateDate, createCreditCardController);
+router.get('/creditcard/:user_name', getCreditCardsController);
 
 module.exports = router;

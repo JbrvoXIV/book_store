@@ -78,9 +78,22 @@ const createCreditCardController = async (req, res) => {
     }
 };
 
+const getCreditCardsController = async (req, res) => {
+    try {
+        const user = await User.findOne({ user_name: req.params.user_name });
+        if(user.credit_cards.length < 1)
+            throw 'No credit cards are tied to this user';
+        
+        return res.status(200).json({ status: 200, message: 'Credit cards found for user', creditCards: user.credit_cards });
+    } catch(e) {
+        return res.status(404).json({ status: 400, message: e.message ? e.message : e });
+    }
+};
+
 module.exports = { 
     getUserByUserNameController,
     createUserController,
     updateUserController,
-    createCreditCardController
+    createCreditCardController,
+    getCreditCardsController
 };
