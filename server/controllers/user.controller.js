@@ -57,6 +57,12 @@ const createCreditCardController = async (req, res) => {
     try {
         if(!(res.date instanceof Date))
             throw res.date;
+        
+        const user = await User.findOne({ user_name: req.body.user_name });
+
+        if(!user)
+            throw 'User does not exist!';
+
         const creditCard = req.body;
         const newCreditCard = new CreditCard({
             card_issuer: creditCard.card_issuer,
@@ -67,7 +73,6 @@ const createCreditCardController = async (req, res) => {
 
         await newCreditCard.save();
 
-        const user = await User.findOne({ user_name: req.body.user_name });
         user.credit_cards.push(newCreditCard._id);
 
         await user.save();
@@ -80,7 +85,7 @@ const createCreditCardController = async (req, res) => {
 
 const getCreditCardsController = async (req, res) => {
     try {
-        const user = await User.findOne({ user_name: req.params.user_name });
+        const user = await User.findOne({ user_name: req.params.user_name }).populate('credit_cards');
         if(user.credit_cards.length < 1)
             throw 'No credit cards are tied to this user';
         

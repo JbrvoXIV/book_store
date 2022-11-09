@@ -9,7 +9,8 @@ const CreditCardSchema = new mongoose.Schema({
     'card_number': {
         type: String,
         required: true,
-        match: [[/[0-9]{16}/], 'Please input the correct card number! (16 numbers)']
+        unique: true,
+        match: [/[0-9]{16}/, 'Please input the correct card number! (16 numbers)']
     },
     'date_valid': {
         type: mongoose.Schema.Types.Date,
@@ -18,11 +19,11 @@ const CreditCardSchema = new mongoose.Schema({
     'sec_code': {
         type: Number,
         required: [true, 'Please input the security code on the back of the card!'],
-        min: 000,
+        min: 100,
         max: 999
     }
 });
 
 const CreditCard = mongoose.model('CreditCard', CreditCardSchema, 'credit_cards');
 
-module.exports = { CreditCard };
+module.exports = { CreditCard, CreditCardSchema };

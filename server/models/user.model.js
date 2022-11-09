@@ -50,7 +50,10 @@ const UserSchema = mongoose.Schema({
         type: AddressSchema,
         required: true
     },
-    credit_cards: [ CreditCardSchema ]
+    credit_cards: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CreditCard'
+    }]
 });
 
 const User = mongoose.model('Users', UserSchema, 'users');
