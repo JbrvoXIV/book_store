@@ -1,4 +1,5 @@
 const { User } = require('../models/user.model.js');
+const { CreditCard } = require('../models/creditCard.model.js');
 
 // get user from userName
 const getUserByUserNameController = async (req, res) => {
@@ -52,4 +53,52 @@ const updateUserController = async (req, res) => {
     }
 }
 
-module.exports = { getUserByUserNameController, createUserController, updateUserController };
+const createCreditCardController = async (req, res) => {
+    try {
+        if(!(res.date instanceof Date))
+            throw res.date;
+        
+        const user = await User.findOne({ user_name: req.body.user_name });
+
+        if(!user)
+            throw 'User does not exist!';
+
+        const creditCard = req.body;
+        const newCreditCard = new CreditCard({
+            card_issuer: creditCard.card_issuer,
+            card_number: creditCard.card_number,
+            date_valid: res.date,
+            sec_code: creditCard.sec_code
+        });
+
+        await newCreditCard.save();
+
+        user.credit_cards.push(newCreditCard._id);
+
+        await user.save();
+
+        return res.status(201).json({ status: 201, message: 'Credit Card Successfully created', creditCard: newCreditCard });
+    } catch(e) {
+        return res.status(409).json({ status: 409, message: e.message ? e.message : e });
+    }
+};
+
+const getCreditCardsController = async (req, res) => {
+    try {
+        const user = await User.findOne({ user_name: req.params.user_name }).populate('credit_cards');
+        if(user.credit_cards.length < 1)
+            throw 'No credit cards are tied to this user';
+        
+        return res.status(200).json({ status: 200, message: 'Credit cards found for user', creditCards: user.credit_cards });
+    } catch(e) {
+        return res.status(404).json({ status: 400, message: e.message ? e.message : e });
+    }
+};
+
+module.exports = { 
+    getUserByUserNameController,
+    createUserController,
+    updateUserController,
+    createCreditCardController,
+    getCreditCardsController
+};
