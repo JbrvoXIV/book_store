@@ -66,7 +66,6 @@ const createUserRating = async (req, res) => {
             title: rating.title,
             author: rating.author,
             rating: rating.rating,
-            comment: rating.comment,
             username: rating.username,
             date: rating.date
         });
@@ -80,4 +79,26 @@ const createUserRating = async (req, res) => {
     
 }
 
-module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating, getAverageBookRatingByTitle};
+const createUserComment = async (req, res) => {
+
+    try{
+
+        const comm = req.body;
+        const newComment = new ratings({
+            title: comm.title,
+            author: comm.author,
+            comment: comm.comment,
+            username: comm.username,
+            date: comm.date
+        });
+        await newComment.save();
+        res.status(201).json({ 
+            status: 201, message: "Comment successfully created", comment: newComment
+        });
+    } catch(error) {
+        res.status(401).json({ status: 401, message: error.message })
+    }
+    
+}
+
+module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating, createUserComment, getAverageBookRatingByTitle};
