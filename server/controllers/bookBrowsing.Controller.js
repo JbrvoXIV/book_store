@@ -38,4 +38,31 @@ const getBookByBookRatingController = async (req, res) => {
 };
 
 
-module.exports = { getBookByBookTitleController , getBookByBookGenreController, getBookByBookRatingController };
+// get top 10 selling books
+
+const getTopsellersController = async (req, res) =>{
+    try {
+    const result = await Book.find ({}).sort({copies_sold: -1}).limit(10);
+
+    } catch(e) {
+        console.log(e);
+        return res.status(404).json({ status: 'failed', message: 'unable to retrieve topsellers' });
+    }
+};
+
+
+// retrieve List of X Books at a time where X is an integer from a given position in the overall recordset. 
+
+const getBooksByPositionController = async (req, res) =>{
+    try {
+    const result = await Book.find ({}).sort({copies_sold: 1}).limit(10);
+
+    } catch(e) {
+        console.log(e);
+        return res.status(404).json({ status: 'failed', message: 'unable to retrieve topsellers' });
+    }
+};
+
+
+
+module.exports = { getBookByBookTitleController , getBookByBookGenreController, getBookByBookRatingController, getTopsellersController, getBooksByPositionController };
