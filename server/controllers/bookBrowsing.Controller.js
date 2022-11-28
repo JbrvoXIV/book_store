@@ -43,7 +43,7 @@ const getBookByBookRatingController = async (req, res) => {
 const getTopsellersController = async (req, res) =>{
     try {
     const result = await Book.find ({}).sort({copies_sold: -1}).limit(10);
-
+    return res.status(200).json(result);
     } catch(e) {
         console.log(e);
         return res.status(404).json({ status: 'failed', message: 'unable to retrieve topsellers' });
@@ -65,4 +65,4 @@ const getBooksByPositionController = async (req, res) =>{
 
 
 
-module.exports = { getBookByBookTitleController , getBookByBookGenreController, getBookByBookRatingController, getTopsellersController, getBooksByPositionController };
+module.exports = { getBookByBookTitleController , getBookByBookGenreController, getBookByBookRatingController, getTopsellersController };
