@@ -1,5 +1,32 @@
 const ratings = require('../models/ratings.model.js');
 
+const getAverageBookRatingByTitle = async (req, res) => {
+
+    try{
+
+        const {BookTitle} = req.query;
+
+        const averageRating = await ratings.aggregate([{
+            
+                $match: {
+                    title: BookTitle
+                }
+            },
+            {
+            $group: 
+                {"_id":null,  
+                "avg_rating": {"$avg": "$rating"}
+            }}])
+
+        return res.status(200).json(averageRating);
+    }
+
+    catch(error) {
+        console.log(error);
+        return res.status(404).json({success: false, message: 'Book ratings not found in database'});
+    }
+}
+
 const getAllBookRatingsByTitle = async (req, res) => {
 
     try{
@@ -39,7 +66,6 @@ const createUserRating = async (req, res) => {
             title: rating.title,
             author: rating.author,
             rating: rating.rating,
-            comment: rating.comment,
             username: rating.username,
             date: rating.date
         });
@@ -53,4 +79,26 @@ const createUserRating = async (req, res) => {
     
 }
 
-module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating};
+const createUserComment = async (req, res) => {
+
+    try{
+
+        const comm = req.body;
+        const newComment = new ratings({
+            title: comm.title,
+            author: comm.author,
+            comment: comm.comment,
+            username: comm.username,
+            date: comm.date
+        });
+        await newComment.save();
+        res.status(201).json({ 
+            status: 201, message: "Comment successfully created", comment: newComment
+        });
+    } catch(error) {
+        res.status(401).json({ status: 401, message: error.message })
+    }
+    
+}
+
+module.exports = {getAllBookRatings, getAllBookRatingsByTitle, createUserRating, createUserComment, getAverageBookRatingByTitle};
