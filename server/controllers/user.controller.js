@@ -5,7 +5,7 @@ const { CreditCard } = require('../models/creditCard.model.js');
 const getUserByUserNameController = async (req, res) => {
     try {
         const {userName} = req.query;
-        const user = await User.find({ user_name: userName });
+        const user = await User.find({ user_name: userName })
         return res.status(200).json(user);
     } catch(e) {
         console.log(e);
