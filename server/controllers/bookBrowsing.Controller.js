@@ -1,5 +1,6 @@
 const {Book} = require('../models/bookBrowsing.model.js');
 const Ratings = require('../models/ratings.model.js');
+const {bookStats} = require("../models/bookStats.model.js")
 
 //get book by bookTitle
 const getBookByBookTitleController = async (req, res) => {
@@ -42,8 +43,8 @@ const getBookByBookRatingController = async (req, res) => {
 
 const getTopsellersController = async (req, res) =>{
     try {
-    const result = await Book.find ({}).sort({copies_sold: -1}).limit(10);
-    return res.status(200).json(result);
+    const result = await bookStats.find ({}).sort({copies_sold: -1}).limit(10);
+    return res.status(200).json(result)
     } catch(e) {
         console.log(e);
         return res.status(404).json({ status: 'failed', message: 'unable to retrieve topsellers' });
@@ -55,14 +56,14 @@ const getTopsellersController = async (req, res) =>{
 
 const getBooksByPositionController = async (req, res) =>{
     try {
-    const result = await Book.find ({}).sort({copies_sold: 1}).limit(10);
-
-    } catch(e) {
-        console.log(e);
-        return res.status(404).json({ status: 'failed', message: 'unable to retrieve topsellers' });
-    }
+            const result = await bookStats.find({ position: { $lte: req.query.position } });
+        return res.status(200).send(result)
+        } catch(e) {
+            console.log(e);
+            return res.status(404).json({ status: 'failed', message: 'unable to retrieve specified book' });
+        }
 };
 
 
 
-module.exports = { getBookByBookTitleController , getBookByBookGenreController, getBookByBookRatingController, getTopsellersController };
+module.exports = { getBookByBookTitleController , getBookByBookGenreController, getBookByBookRatingController, getTopsellersController, getBooksByPositionController };
